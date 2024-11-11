@@ -1,4 +1,8 @@
 {
   "name": "eventhub",
-  "displayName": "eventhub"
+  "displayName": "eventhub",
+  "splash": {
+      "image": "./src/assets/images/splash-page.png",
+      "resizeMode": "contain"
+    }
 }
