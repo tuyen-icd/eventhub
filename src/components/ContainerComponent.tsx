@@ -1,7 +1,7 @@
-import React, { ReactNode } from 'react';
-import { ImageBackground, ScrollView, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { globalStyles } from '../styles/globalStyles';
+import React, {ReactNode} from 'react';
+import {ImageBackground, ScrollView, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {globalStyles} from '../styles/globalStyles';
 
 interface Props {
   isImageBackground?: boolean;
@@ -21,7 +21,7 @@ const ContainerComponent = (props: Props) => {
       source={require('../assets/images/splash-img.png')}
       style={{flex: 1}}
       imageStyle={{flex: 1}}>
-      <SafeAreaView>{returnContainer}</SafeAreaView>
+      <SafeAreaView style={{flex: 1}}>{returnContainer}</SafeAreaView>
     </ImageBackground>
   ) : (
     <SafeAreaView style={[globalStyles.container]}>

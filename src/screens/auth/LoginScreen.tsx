@@ -1,26 +1,45 @@
-import { Lock, Sms } from 'iconsax-react-native';
-import React, { useState } from 'react';
+import {Lock, Sms} from 'iconsax-react-native';
+import React, {useState} from 'react';
+import {Image, Switch} from 'react-native';
+import {
+  ButtonComponent,
+  InputComponent,
+  RowComponent,
+  SectionComponent,
+  SpaceComponent,
+  TextComponent,
+} from '../../components';
 import ContainerComponent from '../../components/ContainerComponent';
-import {ButtonComponent, InputComponent, RowComponent, SectionComponent, SpaceComponent, TextComponent} from '../../components';
-import { appColors } from '../../constants';
-import { Button, Image, Switch } from 'react-native';
-import { Text } from 'react-native-svg';
+import {appColors} from '../../constants';
+import SocialLogin from './components/SocialLogin';
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(true);
+  const [isDisable, setIsDisable] = useState(true);
+
+  const handleLogin = () => {};
   return (
-    <ContainerComponent isImageBackground>
-      <SectionComponent styles={{ justifyContent: 'center', alignItems: 'center', marginTop: 75 }}>
+    <ContainerComponent isImageBackground isScroll>
+      <SectionComponent
+        styles={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 75,
+        }}>
         <Image
-          source={require('../../assets/images/logo.png')}
-          style={{ width: 162, height: 114, marginBottom: 30 }}
+          source={require('../../assets/images/text-logo.png')}
+          style={{
+            width: 162,
+            height: 114,
+            marginBottom: 30,
+          }}
         />
       </SectionComponent>
       <SectionComponent>
-        <TextComponent styles={{ fontSize: 24, fontWeight: '700' }} title text='Sign In' />
-        <SpaceComponent height={21}/>
+        <TextComponent size={24} title text="Sign in" />
+        <SpaceComponent height={21} />
         <InputComponent
           value={email}
           placeholder="Email"
@@ -36,29 +55,45 @@ const LoginScreen = () => {
           allowClear
           affix={<Lock size={22} color={appColors.gray} />}
         />
-        <RowComponent justify='space-between'>
+        <RowComponent justify="space-between">
           <RowComponent onPress={() => setIsRemember(!isRemember)}>
             <Switch
-              trackColor={{ false: appColors.gray, true: appColors.primary }}
+              trackColor={{true: appColors.primary}}
+              thumbColor={appColors.white}
               value={isRemember}
               onChange={() => setIsRemember(!isRemember)}
             />
-            <TextComponent styles={{ marginLeft: 8 }} text="Remember me" />
+            <SpaceComponent width={4} />
+            <TextComponent text="Remember me" />
           </RowComponent>
-          <ButtonComponent text='Forgot Password' onPress={()=>{}} type='text' color={appColors.primary}/>
+          <ButtonComponent
+            text="Forgot Password?"
+            onPress={() => navigation.navigate('ForgotPassword')}
+            type="text"
+          />
         </RowComponent>
       </SectionComponent>
-      <SpaceComponent height={16}/>
+      <SpaceComponent height={16} />
       <SectionComponent>
-        <ButtonComponent text='Sign In' type='primary' onPress={()=>{}}/>
+        <ButtonComponent
+          disable={isDisable}
+          onPress={handleLogin}
+          type="primary"
+          text="SIGN IN"
+        />
       </SectionComponent>
+      <SocialLogin />
       <SectionComponent>
-        <TextComponent text='Don’t have an account?' />
-        <ButtonComponent type='link' text='Sign Up'/>
+        <RowComponent justify="center">
+          <TextComponent text="Don’t have an account? " />
+          <ButtonComponent
+            type="link"
+            text="Sign up"
+            onPress={() => navigation.navigate('SignUpScreen')}
+          />
+        </RowComponent>
       </SectionComponent>
     </ContainerComponent>
-
-    //https://www.youtube.com/watch?v=YKNrm7M-UlM&t=55s     28:53
   );
 };
 
