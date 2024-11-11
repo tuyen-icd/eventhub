@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, { useState } from 'react';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Swiper from 'react-native-swiper';
-import {appColors} from '../../constants/appColors';
-import {appInfo} from '../../constants/appInfo';
-import {globalStyles} from '../../styles/globalStyles';
-import TextComponent from '../../components/TextComponent';
-import {fontFamilies} from '../../constants/appFont';
+import { TextComponent } from '../../components';
+import { appInfo, fontFamilies, appColors } from '../../constants';
+import { globalStyles } from '../../styles/globalStyles';
 
 const OnbroadingScreen = ({navigation}: any) => {
   const [index, setIndex] = useState(0);

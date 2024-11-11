@@ -1,15 +1,13 @@
+import React, { ReactNode } from 'react';
 import {
-  View,
-  Text,
   StyleProp,
-  ViewStyle,
   TextStyle,
   TouchableOpacity,
+  View,
+  ViewStyle
 } from 'react-native';
-import React, {ReactNode} from 'react';
-import {globalStyles} from '../styles/globalStyles';
-import {appColors} from '../constants/appColors';
-import {fontFamilies} from '../constants/appFont';
+import { appColors, fontFamilies } from '../constants';
+import { globalStyles } from '../styles/globalStyles';
 import TextComponent from './TextComponent';
 
 interface Props {

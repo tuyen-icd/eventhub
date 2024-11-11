@@ -1,7 +1,7 @@
-import {View, Text, ScrollView, ImageBackground} from 'react-native';
-import React, {ReactNode} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {globalStyles} from '../styles/globalStyles';
+import React, { ReactNode } from 'react';
+import { ImageBackground, ScrollView, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { globalStyles } from '../styles/globalStyles';
 
 interface Props {
   isImageBackground?: boolean;

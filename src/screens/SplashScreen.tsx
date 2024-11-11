@@ -1,14 +1,11 @@
-import {
-  View,
-  Text,
-  ImageBackground,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
 import React from 'react';
-import SpaceComponent from '../components/SpaceComponent';
-import {appInfo} from '../constants/appInfo';
-import {appColors} from '../constants/appColors';
+import {
+  ActivityIndicator,
+  Image,
+  ImageBackground
+} from 'react-native';
+import { SpaceComponent } from '../components';
+import { appInfo, appColors } from '../constants';
 
 const SplashScreen = () => {
   return (

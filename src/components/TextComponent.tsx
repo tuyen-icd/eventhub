@@ -1,8 +1,7 @@
-import {View, Text, StyleProp, TextStyle, Platform} from 'react-native';
 import React from 'react';
-import {appColors} from '../constants/appColors';
-import {fontFamilies} from '../constants/appFont';
-import {globalStyles} from '../styles/globalStyles';
+import { Platform, StyleProp, Text, TextStyle } from 'react-native';
+import { appColors, fontFamilies } from '../constants';
+import { globalStyles } from '../styles/globalStyles';
 interface Props {
   text: string;
   color?: string;
