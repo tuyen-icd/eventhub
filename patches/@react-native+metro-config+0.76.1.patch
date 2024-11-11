@@ -1,0 +1,13 @@
+diff --git a/node_modules/@react-native/metro-config/dist/index.js b/node_modules/@react-native/metro-config/dist/index.js
+index 8ece5ae..2249730 100644
+--- a/node_modules/@react-native/metro-config/dist/index.js
++++ b/node_modules/@react-native/metro-config/dist/index.js
+@@ -35,7 +35,7 @@ const INTERNAL_CALLSITES_REGEX = new RegExp(
+     "/node_modules/scheduler/.+\\.js$",
+     "^\\[native code\\]$",
+   ]
+-    .map((pathPattern) => pathPattern.replaceAll("/", "[/\\\\]"))
++    .map((pathPattern) => pathPattern.replace("/", "[/\\\\]"))
+     .join("|")
+ );
+ function getDefaultConfig(projectRoot) {
