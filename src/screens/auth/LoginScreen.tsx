@@ -1,6 +1,7 @@
-import {Lock, Sms} from 'iconsax-react-native';
+import {ArrowCircleRight2, Lock, Sms} from 'iconsax-react-native';
 import React, {useState} from 'react';
 import {Image, Switch} from 'react-native';
+import authenticationAPI from '../../apis/authAPI';
 import {
   ButtonComponent,
   InputComponent,
@@ -12,7 +13,6 @@ import {
 import ContainerComponent from '../../components/ContainerComponent';
 import {appColors} from '../../constants';
 import SocialLogin from './components/SocialLogin';
-import authenticationAPI from '../../apis/authAPI';
 
 const LoginScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
@@ -20,7 +20,7 @@ const LoginScreen = ({navigation}: any) => {
   const [isRemember, setIsRemember] = useState(true);
   const [isDisable, setIsDisable] = useState(true);
 
-  const handleLogin = async() => {
+  const handleLogin = async () => {
     try {
       const res = await authenticationAPI.HandleAuthentication('/hello');
       console.log(res);
@@ -84,10 +84,12 @@ const LoginScreen = ({navigation}: any) => {
       <SpaceComponent height={16} />
       <SectionComponent>
         <ButtonComponent
-          disable={isDisable}
+          // disable={isDisable}
           onPress={handleLogin}
           type="primary"
           text="SIGN IN"
+          iconFlex="right"
+          icon={<ArrowCircleRight2 size="32" color="white" />}
         />
       </SectionComponent>
       <SocialLogin />
@@ -97,7 +99,7 @@ const LoginScreen = ({navigation}: any) => {
           <ButtonComponent
             type="link"
             text="Sign up"
-            onPress={() => navigation.navigate('LoginScreen')}
+            onPress={() => navigation.navigate('SignUpScreen')}
           />
         </RowComponent>
       </SectionComponent>

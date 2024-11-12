@@ -3,12 +3,12 @@ import SplashScreen from "./SplashScreen"
 import LoginScreen from "./auth/LoginScreen"
 import SignUpScreen from "./auth/SignUpScreen"
 import ForgotPassword from "./auth/ForgotPassword"
-import Verication from "./auth/Verication"
+import VericationScreen from "./auth/VericationScreen"
 export {
     HomeScreen,
     SplashScreen,
     LoginScreen,
     SignUpScreen,
-    ForgotPassword, 
-    Verication,
+    ForgotPassword,
+    VericationScreen,
 }
