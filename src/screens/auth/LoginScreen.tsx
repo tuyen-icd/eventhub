@@ -1,15 +1,7 @@
 import {ArrowCircleRight2, Lock, Sms} from 'iconsax-react-native';
 import React, {useState} from 'react';
 import {Image, Switch} from 'react-native';
-import authenticationAPI from '../../apis/authAPI';
-import {
-  ButtonComponent,
-  InputComponent,
-  RowComponent,
-  SectionComponent,
-  SpaceComponent,
-  TextComponent,
-} from '../../components';
+import {ButtonComponent, InputComponent, RowComponent, SectionComponent, SpaceComponent, TextComponent} from '../../components';
 import ContainerComponent from '../../components/ContainerComponent';
 import {appColors} from '../../constants';
 import SocialLogin from './components/SocialLogin';
@@ -48,13 +40,7 @@ const LoginScreen = ({navigation}: any) => {
       <SectionComponent>
         <TextComponent size={24} title text="Sign in" />
         <SpaceComponent height={21} />
-        <InputComponent
-          value={email}
-          placeholder="Email"
-          onChange={val => setEmail(val)}
-          allowClear
-          affix={<Sms size={22} color={appColors.gray} />}
-        />
+        <InputComponent value={email} placeholder="Email" onChange={val => setEmail(val)} allowClear affix={<Sms size={22} color={appColors.gray} />} />
         <InputComponent
           value={password}
           placeholder="Password"
@@ -63,10 +49,13 @@ const LoginScreen = ({navigation}: any) => {
           allowClear
           affix={<Lock size={22} color={appColors.gray} />}
         />
+
         <RowComponent justify="space-between">
           <RowComponent onPress={() => setIsRemember(!isRemember)}>
             <Switch
-              trackColor={{true: appColors.primary}}
+              trackColor={{
+                true: appColors.primary,
+              }}
               thumbColor={appColors.white}
               value={isRemember}
               onChange={() => setIsRemember(!isRemember)}
@@ -74,33 +63,19 @@ const LoginScreen = ({navigation}: any) => {
             <SpaceComponent width={4} />
             <TextComponent text="Remember me" />
           </RowComponent>
-          <ButtonComponent
-            text="Forgot Password?"
-            onPress={() => navigation.navigate('ForgotPassword')}
-            type="text"
-          />
+          <ButtonComponent text="Forgot Password?" onPress={() => navigation.navigate('ForgotPassword')} type="text" />
         </RowComponent>
       </SectionComponent>
       <SpaceComponent height={16} />
+      <SpaceComponent height={16} />
       <SectionComponent>
-        <ButtonComponent
-          // disable={isDisable}
-          onPress={handleLogin}
-          type="primary"
-          text="SIGN IN"
-          iconFlex="right"
-          icon={<ArrowCircleRight2 size="32" color="white" />}
-        />
+        <ButtonComponent disable={isDisable} onPress={handleLogin} type="primary" text="SIGN IN" />
       </SectionComponent>
       <SocialLogin />
       <SectionComponent>
         <RowComponent justify="center">
           <TextComponent text="Don’t have an account? " />
-          <ButtonComponent
-            type="link"
-            text="Sign up"
-            onPress={() => navigation.navigate('SignUpScreen')}
-          />
+          <ButtonComponent type="link" text="Sign up" onPress={() => navigation.navigate('LoginScreen')} />
         </RowComponent>
       </SectionComponent>
     </ContainerComponent>
