@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { ButtonComponent, ContainerComponent, InputComponent, RowComponent, SectionComponent, SpaceComponent, TextComponent } from '../../components';
 import { Lock, Sms, User } from 'iconsax-react-native';
 import { appColors } from '../../constants';
+import { Validate } from '../../utils/validate';
+import { LoadingModal } from '../../modal';
 
 const initValue = {
   userName: '',
@@ -14,6 +16,8 @@ const initValue = {
 const SignUpScreen = ({ navigation }: any) => {
   const [values, setValues] = useState(initValue);
   const [isDisable, setIsDisable] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<any>();
 
   const handleChangeValue = (key: string, value: string) => {
     const data: any = { ...values };
@@ -21,11 +25,65 @@ const SignUpScreen = ({ navigation }: any) => {
     setValues(data);
   }
 
-  const handleLogin = () => {
 
+  const formValidator = (key: string) => {
+    const data = { ...errorMessage };
+    let message = ``;
+
+    switch (key) {
+      case 'email':
+        if (!values.email) {
+          message = `Email is required!!!`;
+        } else if (!Validate.email(values.email)) {
+          message = 'Email is not invalid!!';
+        } else {
+          message = '';
+        }
+
+        break;
+
+      case 'password':
+        message = !values.password ? `Password is required!!!` : '';
+        break;
+
+      case 'confirmPassword':
+        if (!values.confirmPassword) {
+          message = `Please type confirm password!!`;
+        } else if (values.confirmPassword !== values.password) {
+          message = 'Password is not match!!!';
+        } else {
+          message = '';
+        }
+
+        break;
+    }
+
+    data[`${key}`] = message;
+
+    setErrorMessage(data);
+  };
+
+  const handleRegister = async () => {
+    
+    const { email, password, confirmPassword } = values;
+
+    if (email && password && confirmPassword) {
+      setIsLoading(true);
+      console.log("values", values);
+      try {
+
+      } catch (error) {
+        console.log('error', error);
+        setIsLoading(false);
+      }
+    } else {
+      setErrorMessage('Vui long nhap day du thong tin');
+    }
+    
   }
 
   return (
+    <>
     <ContainerComponent isImageBackground isScroll back>
       <SectionComponent>
         <TextComponent size={24} title text="Sign up" />
@@ -43,6 +101,7 @@ const SignUpScreen = ({ navigation }: any) => {
           onChange={val => handleChangeValue('email', val)}
           allowClear
           affix={<Sms size={22} color={appColors.gray} />}
+          onEnd={() => formValidator('email')}
         />
         <InputComponent
           value={values.password}
@@ -51,6 +110,7 @@ const SignUpScreen = ({ navigation }: any) => {
           allowClear
           affix={<Lock size={22} color={appColors.gray} />}
           isPassword
+          onEnd={() => formValidator('password')}
         />
         <InputComponent
           value={values.confirmPassword}
@@ -59,13 +119,30 @@ const SignUpScreen = ({ navigation }: any) => {
           allowClear
           affix={<Lock size={22} color={appColors.gray} />}
           isPassword
+          onEnd={() => formValidator('confirmPassword')}
         />
       </SectionComponent>
+      {
+        errorMessage && (
+          <SectionComponent>
+            {Object.keys(errorMessage).map(
+              (error, index) =>
+                errorMessage[`${error}`] && (
+                  <TextComponent
+                    text={errorMessage[`${error}`]}
+                    key={`error${index}`}
+                    color={appColors.danger}
+                  />
+                ),
+            )}
+          </SectionComponent>
+        )
+      }
       <SpaceComponent height={16} />
       <SectionComponent>
           <ButtonComponent
             disable={isDisable}
-            onPress={handleLogin}
+            onPress={handleRegister}
             type="primary"
             text="SIGN UP"
           />
@@ -80,7 +157,9 @@ const SignUpScreen = ({ navigation }: any) => {
           />
         </RowComponent>
       </SectionComponent>
-    </ContainerComponent>
+      </ContainerComponent>
+      <LoadingModal visible={isLoading} />
+    </>
   );
 };
 
