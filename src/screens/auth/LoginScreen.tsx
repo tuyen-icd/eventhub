@@ -5,6 +5,7 @@ import {ButtonComponent, InputComponent, RowComponent, SectionComponent, SpaceCo
 import ContainerComponent from '../../components/ContainerComponent';
 import {appColors} from '../../constants';
 import SocialLogin from './components/SocialLogin';
+import authenticationAPI from '../../apis/authAPI';
 
 const LoginScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
@@ -14,7 +15,16 @@ const LoginScreen = ({navigation}: any) => {
 
   const handleLogin = async () => {
     try {
-      const res = await authenticationAPI.HandleAuthentication('/hello');
+      const res = await authenticationAPI.HandleAuthentication(
+        '/auth/login',
+        {
+          username: 'emilys',
+          password: 'emilyspass',
+          expiresInMins: 30,
+        },
+        'post',
+        'include',
+      );
       console.log(res);
     } catch (error) {
       console.log(error);
@@ -75,7 +85,7 @@ const LoginScreen = ({navigation}: any) => {
       <SectionComponent>
         <RowComponent justify="center">
           <TextComponent text="Don’t have an account? " />
-          <ButtonComponent type="link" text="Sign up" onPress={() => navigation.navigate('LoginScreen')} />
+          <ButtonComponent type="link" text="Sign up" onPress={() => navigation.navigate('SignUpScreen')} />
         </RowComponent>
       </SectionComponent>
     </ContainerComponent>
