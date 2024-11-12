@@ -12,6 +12,7 @@ import {
 import ContainerComponent from '../../components/ContainerComponent';
 import {appColors} from '../../constants';
 import SocialLogin from './components/SocialLogin';
+import authenticationAPI from '../../apis/authAPI';
 
 const LoginScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
@@ -19,7 +20,14 @@ const LoginScreen = ({navigation}: any) => {
   const [isRemember, setIsRemember] = useState(true);
   const [isDisable, setIsDisable] = useState(true);
 
-  const handleLogin = () => {};
+  const handleLogin = async() => {
+    try {
+      const res = await authenticationAPI.HandleAuthentication('/hello');
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <ContainerComponent isImageBackground isScroll>
       <SectionComponent
@@ -89,7 +97,7 @@ const LoginScreen = ({navigation}: any) => {
           <ButtonComponent
             type="link"
             text="Sign up"
-            onPress={() => navigation.navigate('SignUpScreen')}
+            onPress={() => navigation.navigate('LoginScreen')}
           />
         </RowComponent>
       </SectionComponent>
