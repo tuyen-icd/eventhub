@@ -23,6 +23,7 @@
     "add": "^2.0.6",
     "axios": "^1.7.7",
     "iconsax-react-native": "^0.0.8",
+    "immer": "^10.1.1",
     "patch-package": "^8.0.0",
     "query-string": "^9.1.1",
     "react": "18.3.1",

@@ -6,14 +6,17 @@ import ContainerComponent from '../../components/ContainerComponent';
 import {appColors} from '../../constants';
 import SocialLogin from './components/SocialLogin';
 import authenticationAPI from '../../apis/authAPI';
-import { Validate } from '../../utils/validate';
+import {Validate} from '../../utils/validate';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useAuthStore} from '../../stores/auth.store';
 
 const LoginScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(true);
   const [isDisable, setIsDisable] = useState(true);
+
+  const login = useAuthStore(state => state.login);
 
   useEffect(() => {
     const emailValidation = Validate.email(email);
@@ -30,30 +33,25 @@ const LoginScreen = ({navigation}: any) => {
     if (emailValidator) {
       try {
         const res = await authenticationAPI.HandleAuthentication(
-          '/auth/login',
+          '/login',
           {
             username: 'emilys',
             password: 'emilyspass',
             expiresInMins: 30,
           },
           'post',
-          'include',
         );
 
         //Neu thanh cong thi push res len zustand
-        //...
-        await AsyncStorage.setItem(
-          'auth',
-          isRemember ? JSON.stringify(res.data) : email,
-        )
-        console.log(res);
+        login(res);
+        await AsyncStorage.setItem('auth', isRemember ? JSON.stringify(res) : email);
+        // console.log('handleLogin', res);
       } catch (error) {
         console.log(error);
       }
     } else {
       Alert.alert('Email not correct!');
     }
-
   };
   return (
     <ContainerComponent isImageBackground isScroll>
@@ -98,13 +96,12 @@ const LoginScreen = ({navigation}: any) => {
             <SpaceComponent width={4} />
             <TextComponent text="Remember me" />
           </RowComponent>
-          <ButtonComponent text="Forgot Password?" onPress={() => navigation.navigate('ForgotPassword')} type="text" />
+          <ButtonComponent disable={isDisable} text="Forgot Password?" onPress={() => navigation.navigate('ForgotPassword')} type="text" />
         </RowComponent>
       </SectionComponent>
       <SpaceComponent height={16} />
-      <SpaceComponent height={16} />
       <SectionComponent>
-        <ButtonComponent disable={isDisable} onPress={handleLogin} type="primary" text="SIGN IN" />
+        <ButtonComponent onPress={handleLogin} type="primary" text="SIGN IN" />
       </SectionComponent>
       <SocialLogin />
       <SectionComponent>

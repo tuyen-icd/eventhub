@@ -7,7 +7,7 @@ import {useAsyncStorage} from '@react-native-async-storage/async-storage';
 import MainNavigator from './src/navigators/MainNavigator';
 import {initialWindowMetrics, SafeAreaProvider} from 'react-native-safe-area-context';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import AppNavigation from './src/navigators/AppNavigation';
+import AppRouter from './src/navigators/AppRouter';
 
 const queryClient = new QueryClient();
 
@@ -16,7 +16,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
-        <AppNavigation />
+        <AppRouter />
       </SafeAreaProvider>
     </QueryClientProvider>
   );

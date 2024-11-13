@@ -6,8 +6,6 @@ class AuthAPI {
         url: string,
         data?: any,
         method?: 'get' | 'post' | 'put' | 'delete',
-        credentials?: 'include',
-
     ) => {
         return await axiosClient(`${appInfo.BASE_URL}/auth${url}`, {
             method: method ?? 'get',
