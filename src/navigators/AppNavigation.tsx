@@ -11,15 +11,13 @@ function AppNavigation() {
   const {getItem, setItem} = useAsyncStorage('accessToken');
 
   useEffect(() => {
+    checkToken();
     const timeOut = setTimeout(() => {
       setIsShowSplash(false);
     }, 1500);
     return () => clearTimeout(timeOut);
   }, []);
 
-  useEffect(() => {
-    checkToken();
-  }, []);
 
   const checkToken = async () => {
     const token = await getItem();

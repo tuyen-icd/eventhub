@@ -1,16 +1,30 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {ForgotPassword, LoginScreen, SignUpScreen, VericationScreen} from '../screens';
 import OnbroadingScreen from '../screens/auth/OnBoardingScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AuthNavigator = () => {
+
+  const [isExistingUser, setIsExistingUser] = useState(false);
   const Stack = createNativeStackNavigator();
+
+  useEffect(() => {
+    checkUserExist();
+  },[])
+  const checkUserExist = async () => {
+    const res = await AsyncStorage.getItem('auth');
+
+    res && setIsExistingUser(true)
+  }
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="OnBoarding" component={OnbroadingScreen} />
+      {!isExistingUser && (
+        <Stack.Screen name="OnBoarding" component={OnbroadingScreen} />
+      ) }
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
       <Stack.Screen name="Verication" component={VericationScreen} />
