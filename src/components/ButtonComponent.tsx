@@ -1,11 +1,5 @@
 import React, {ReactNode} from 'react';
-import {
-  StyleProp,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {ActivityIndicator, StyleProp, TextStyle, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {appColors, fontFamilies} from '../constants';
 import {globalStyles} from '../styles/globalStyles';
 import TextComponent from './TextComponent';
@@ -22,43 +16,28 @@ interface Props {
   onPress?: () => void;
   iconFlex?: 'right' | 'left';
   disable?: boolean;
+  isLoading?: boolean;
 }
 
 const ButtonComponent = (props: Props) => {
-  const {
-    icon,
-    text,
-    textColor,
-    textStyles,
-    textFont,
-    color,
-    styles,
-    onPress,
-    iconFlex,
-    type,
-    disable,
-  } = props;
+  const {icon, text, textColor, textStyles, textFont, color, styles, onPress, iconFlex, type, disable, isLoading} = props;
 
   return type === 'primary' ? (
     <View style={{alignItems: 'center'}}>
       <TouchableOpacity
-        disabled={disable}
+        disabled={disable || isLoading}
         onPress={onPress}
         style={[
           globalStyles.button,
           globalStyles.shadow,
           {
-            backgroundColor: color
-              ? color
-              : disable
-              ? appColors.gray4
-              : appColors.primary,
+            backgroundColor: color ? color : disable ? appColors.gray4 : appColors.primary,
             marginBottom: 17,
-            width: '90%',
+            width: '100%',
           },
           styles,
         ]}>
-        {icon && iconFlex === 'left' && icon}
+        {isLoading ? <ActivityIndicator size="small" color={appColors.white} style={{marginRight: 10}} /> : icon && iconFlex === 'left' && icon}
         <TextComponent
           text={text}
           color={textColor ?? appColors.white}
@@ -78,11 +57,7 @@ const ButtonComponent = (props: Props) => {
     </View>
   ) : (
     <TouchableOpacity onPress={onPress}>
-      <TextComponent
-        flex={0}
-        text={text}
-        color={type === 'link' ? appColors.primary : appColors.text}
-      />
+      <TextComponent flex={0} text={text} color={type === 'link' ? appColors.primary : appColors.text} />
     </TouchableOpacity>
   );
 };

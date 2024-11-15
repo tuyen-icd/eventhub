@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios --simulator=\"iPhone 14 Pro Max\" ",
+    "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
     "postinstall": "patch-package",
@@ -13,6 +13,7 @@
     "format": "pretty-quick --staged"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.1",
     "@react-native-async-storage/async-storage": "^2.0.0",
     "@react-navigation/bottom-tabs": "^7.0.0",
     "@react-navigation/drawer": "^7.0.1",
@@ -31,6 +32,7 @@
     "react-native": "0.76.1",
     "react-native-config": "^1.5.3",
     "react-native-device-info": "^14.0.0",
+    "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "^2.20.2",
     "react-native-reanimated": "^3.16.1",
     "react-native-safe-area-context": "^4.14.0",

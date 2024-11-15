@@ -4,7 +4,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {globalStyles} from '../styles/globalStyles';
 import {useNavigation} from '@react-navigation/native';
 import RowComponent from './RowComponent';
-import ButtonComponent from './ButtonComponent';
 import {ArrowLeft} from 'iconsax-react-native';
 import {appColors, fontFamilies} from '../constants';
 import TextComponent from './TextComponent';
@@ -21,7 +20,7 @@ const ContainerComponent = (props: Props) => {
   const navigation = useNavigation();
   const headerComponent = () => {
     return (
-      <View style={{flex: 1, paddingTop: 30}}>
+      <View style={{flex: 1, paddingTop: 30, backgroundColor: 'white'}}>
         {(title || back) && (
           <RowComponent
             styles={{

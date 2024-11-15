@@ -1,14 +1,6 @@
 import {ArrowCircleRight2, Lock, Sms, User} from 'iconsax-react-native';
 import React, {useEffect, useState} from 'react';
-import {
-  ButtonComponent,
-  ContainerComponent,
-  InputComponent,
-  RowComponent,
-  SectionComponent,
-  SpaceComponent,
-  TextComponent,
-} from '../../components';
+import {ButtonComponent, ContainerComponent, InputComponent, RowComponent, SectionComponent, SpaceComponent, TextComponent} from '../../components';
 import {appColors} from '../../constants';
 import {LoadingModal} from '../../modal';
 import {Validate} from '../../utils/validate';
@@ -31,10 +23,7 @@ const SignUpScreen = ({navigation}: any) => {
   useEffect(() => {
     if (
       !errorMessage ||
-      (errorMessage &&
-        (errorMessage.email ||
-          errorMessage.password ||
-          errorMessage.confirmPassword)) ||
+      (errorMessage && (errorMessage.email || errorMessage.password || errorMessage.confirmPassword)) ||
       !values.email ||
       !values.password ||
       !values.confirmPassword
@@ -99,11 +88,7 @@ const SignUpScreen = ({navigation}: any) => {
         setErrorMessage('');
         setIsLoading(true);
         try {
-          const res = await authenticationAPI.HandleAuthentication(
-            '/register',
-            values,
-            'post',
-          );
+          const res = await authenticationAPI.HandleAuthentication('/register', values, 'post');
           setIsLoading(false);
           if (res.data?.accesstoken) {
             navigation.navigate('VerifyScreen');
@@ -180,22 +165,10 @@ const SignUpScreen = ({navigation}: any) => {
         )} */}
         {errorMessage && (
           <SectionComponent>
-            {errorMessage.general && (
-              <TextComponent
-                text={errorMessage.general}
-                color={appColors.danger}
-              />
-            )}
+            {errorMessage.general && <TextComponent text={errorMessage.general} color={appColors.danger} />}
             {Object.keys(errorMessage).map(
               (error, index) =>
-                error !== 'general' &&
-                errorMessage[`${error}`] && (
-                  <TextComponent
-                    text={errorMessage[`${error}`]}
-                    key={`error${index}`}
-                    color={appColors.danger}
-                  />
-                ),
+                error !== 'general' && errorMessage[`${error}`] && <TextComponent text={errorMessage[`${error}`]} key={`error${index}`} color={appColors.danger} />,
             )}
           </SectionComponent>
         )}
@@ -217,11 +190,7 @@ const SignUpScreen = ({navigation}: any) => {
         <SectionComponent>
           <RowComponent justify="center">
             <TextComponent text="Alredy have an account? " />
-            <ButtonComponent
-              type="link"
-              text="SignIn"
-              onPress={() => navigation.navigate('LoginScreen')}
-            />
+            <ButtonComponent type="link" text="SignIn" onPress={() => navigation.navigate('LoginScreen')} />
           </RowComponent>
         </SectionComponent>
       </ContainerComponent>
