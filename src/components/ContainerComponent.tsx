@@ -7,6 +7,7 @@ import RowComponent from './RowComponent';
 import {ArrowLeft} from 'iconsax-react-native';
 import {appColors, fontFamilies} from '../constants';
 import TextComponent from './TextComponent';
+import {ICBackWhite} from '../assets/svgs';
 
 interface Props {
   isImageBackground?: boolean;
@@ -20,7 +21,7 @@ const ContainerComponent = (props: Props) => {
   const navigation = useNavigation();
   const headerComponent = () => {
     return (
-      <View style={{flex: 1, paddingTop: 30, backgroundColor: 'white'}}>
+      <View style={{flex: 1, paddingTop: 0}}>
         {(title || back) && (
           <RowComponent
             styles={{
@@ -32,7 +33,7 @@ const ContainerComponent = (props: Props) => {
             }}>
             {back && (
               <TouchableOpacity onPress={() => navigation.goBack()} style={{marginRight: 12}}>
-                <ArrowLeft size={24} color={appColors.text} />
+                <ICBackWhite style={{width: 45, height: 45}} />
               </TouchableOpacity>
             )}
             {title ? <TextComponent text={title} size={16} font={fontFamilies.medium} flex={1} /> : <></>}
@@ -51,7 +52,7 @@ const ContainerComponent = (props: Props) => {
     <View style={{flex: 1}}>{children}</View>
   );
   return isImageBackground ? (
-    <ImageBackground source={require('../assets/images/splash-img.png')} style={{flex: 1}} imageStyle={{flex: 1}}>
+    <ImageBackground source={require('../assets/images/LogIn_Empty.png')} style={{flex: 1}} imageStyle={{flex: 1}}>
       <SafeAreaView style={{flex: 1}}>{headerComponent()}</SafeAreaView>
     </ImageBackground>
   ) : (

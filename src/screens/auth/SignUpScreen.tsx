@@ -1,11 +1,12 @@
 import {ArrowCircleRight2, Lock, Sms, User} from 'iconsax-react-native';
 import React, {useEffect, useState} from 'react';
 import {ButtonComponent, ContainerComponent, InputComponent, RowComponent, SectionComponent, SpaceComponent, TextComponent} from '../../components';
-import {appColors} from '../../constants';
+import {appColors, fontFamilies} from '../../constants';
 import {LoadingModal} from '../../modal';
 import {Validate} from '../../utils/validate';
 import SocialLogin from './components/SocialLogin';
 import authenticationAPI from '../../apis/authAPI';
+import {ScrollView} from 'react-native';
 
 const initValue = {
   userName: '',
@@ -111,87 +112,94 @@ const SignUpScreen = ({navigation}: any) => {
 
   return (
     <>
-      <ContainerComponent isImageBackground isScroll back>
-        <SectionComponent>
-          <TextComponent size={24} title text="Sign up" />
-          <SpaceComponent height={21} />
-          <InputComponent
-            value={values.userName}
-            placeholder="User name"
-            onChange={val => handleChangeValue('userName', val)}
-            allowClear
-            affix={<User size={22} color={appColors.gray} />}
-          />
-          <InputComponent
-            value={values.email}
-            placeholder="Email"
-            onChange={val => handleChangeValue('email', val)}
-            allowClear
-            affix={<Sms size={22} color={appColors.gray} />}
-            onEnd={() => formValidator('email')}
-          />
-          <InputComponent
-            value={values.password}
-            placeholder="Password"
-            onChange={val => handleChangeValue('password', val)}
-            allowClear
-            affix={<Lock size={22} color={appColors.gray} />}
-            isPassword
-            onEnd={() => formValidator('password')}
-          />
-          <InputComponent
-            value={values.confirmPassword}
-            placeholder="Confirm password"
-            onChange={val => handleChangeValue('confirmPassword', val)}
-            isPassword
-            allowClear
-            affix={<Lock size={22} color={appColors.gray} />}
-            onEnd={() => formValidator('confirmPassword')}
-          />
+      <ContainerComponent isImageBackground back>
+        <SectionComponent styles={{alignItems: 'center'}}>
+          <TextComponent size={30} title text="Sign Up" color={appColors.white} />
+          <SpaceComponent height={12} />
+          <TextComponent styles={{letterSpacing: 1}} size={16} text="Please sign up to get started" color={appColors.white} />
         </SectionComponent>
-        {/* {errorMessage && (
-          <SectionComponent>
-            {Object.keys(errorMessage).map(
-              (error, index) =>
-                errorMessage[`${error}`] && (
-                  <TextComponent
-                    text={errorMessage[`${error}`]}
-                    key={`error${index}`}
-                    color={appColors.danger}
-                  />
-                ),
-            )}
-          </SectionComponent>
-        )} */}
-        {errorMessage && (
-          <SectionComponent>
-            {errorMessage.general && <TextComponent text={errorMessage.general} color={appColors.danger} />}
-            {Object.keys(errorMessage).map(
-              (error, index) =>
-                error !== 'general' && errorMessage[`${error}`] && <TextComponent text={errorMessage[`${error}`]} key={`error${index}`} color={appColors.danger} />,
-            )}
-          </SectionComponent>
-        )}
+        <SpaceComponent height={50} />
 
-        <SpaceComponent height={16} />
-        <SectionComponent>
-          <ButtonComponent
-            // disable={isDisable}
-            onPress={handleRegister}
-            type="primary"
-            text="SIGN UP"
-            iconFlex="right"
-            icon={<ArrowCircleRight2 size="32" color="white" />}
-          />
-        </SectionComponent>
-        <SectionComponent>
-          <SocialLogin />
-        </SectionComponent>
-        <SectionComponent>
-          <RowComponent justify="center">
-            <TextComponent text="Alredy have an account? " />
-            <ButtonComponent type="link" text="SignIn" onPress={() => navigation.navigate('LoginScreen')} />
-          </RowComponent>
+        <SectionComponent styles={{flex: 1, backgroundColor: 'white', borderTopLeftRadius: 20, borderTopRightRadius: 20, width: '100%'}}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <SpaceComponent height={24} />
+            {/* <TextComponent color={appColors.text} font={fontFamilies.regular} size={13} text="USER NAME" styles={{paddingBottom: 8}} /> */}
+
+            <InputComponent
+              value={values.userName}
+              placeholder="User name"
+              onChange={val => handleChangeValue('userName', val)}
+              allowClear
+              affix={<User size={22} color={appColors.gray} />}
+            />
+            {/* <TextComponent color={appColors.text} font={fontFamilies.regular} size={13} text="EMAIL" styles={{paddingBottom: 8}} /> */}
+            <InputComponent
+              value={values.email}
+              placeholder="Email"
+              onChange={val => handleChangeValue('email', val)}
+              allowClear
+              affix={<Sms size={22} color={appColors.gray} />}
+              onEnd={() => formValidator('email')}
+            />
+            {/* <TextComponent color={appColors.text} font={fontFamilies.regular} size={13} text="PASSWORD" styles={{paddingBottom: 8}} /> */}
+
+            <InputComponent
+              value={values.password}
+              placeholder="Password"
+              onChange={val => handleChangeValue('password', val)}
+              allowClear
+              affix={<Lock size={22} color={appColors.gray} />}
+              isPassword
+              onEnd={() => formValidator('password')}
+            />
+            {/* <TextComponent color={appColors.text} font={fontFamilies.regular} size={13} text="CONFIRM PASSWORD" styles={{paddingBottom: 8}} /> */}
+
+            <InputComponent
+              value={values.confirmPassword}
+              placeholder="Confirm password"
+              onChange={val => handleChangeValue('confirmPassword', val)}
+              isPassword
+              allowClear
+              affix={<Lock size={22} color={appColors.gray} />}
+              onEnd={() => formValidator('confirmPassword')}
+            />
+            {errorMessage && (
+              <SectionComponent>
+                {Object.keys(errorMessage).map(
+                  (error, index) => errorMessage[`${error}`] && <TextComponent text={errorMessage[`${error}`]} key={`error${index}`} color={appColors.danger} />,
+                )}
+              </SectionComponent>
+            )}
+            {errorMessage && (
+              <SectionComponent>
+                {errorMessage.general && <TextComponent text={errorMessage.general} color={appColors.danger} />}
+                {Object.keys(errorMessage).map(
+                  (error, index) =>
+                    error !== 'general' && errorMessage[`${error}`] && <TextComponent text={errorMessage[`${error}`]} key={`error${index}`} color={appColors.danger} />,
+                )}
+              </SectionComponent>
+            )}
+
+            <SpaceComponent height={47} />
+            <SectionComponent>
+              <ButtonComponent
+                // disable={isDisable}
+                onPress={handleRegister}
+                type="primary"
+                text="SIGN UP"
+                iconFlex="right"
+                icon={<ArrowCircleRight2 size="32" color="white" />}
+              />
+            </SectionComponent>
+            {/* <SpaceComponent height={16} /> */}
+            <SectionComponent>
+              <RowComponent justify="center">
+                <TextComponent text="Alredy have an account? " />
+                <ButtonComponent type="link" text="SignIn" onPress={() => navigation.navigate('LoginScreen')} />
+              </RowComponent>
+            </SectionComponent>
+            <ButtonComponent type="link" text="Verification" onPress={() => navigation.navigate('VerificationScreen')} />
+          </ScrollView>
         </SectionComponent>
       </ContainerComponent>
       <LoadingModal visible={isLoading} />

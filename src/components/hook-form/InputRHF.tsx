@@ -5,7 +5,6 @@ interface IText {
   name: string;
   inputProps?: any;
 }
-
 const Text = ({name, inputProps}: IText) => {
   const {control} = useFormContext();
 

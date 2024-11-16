@@ -33,7 +33,8 @@ const InputComponent = (props: Props) => {
         style={[
           styles.inputContainer,
           {
-            borderColor: error ? appColors.danger : appColors.gray3,
+            borderColor: error ? appColors.danger : appColors.input,
+            backgroundColor: appColors.input,
           },
         ]}>
         {affix ?? affix}

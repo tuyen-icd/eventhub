@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const VerificationScreen = ({navigation, route}: any) => {
   // const {code, email, password, username} = route.params;
 
-  const email = '';
+  const email = 'example@gmail.com';
   const code = '';
 
   const [currentCode, setCurrentCode] = useState<string>(code);
@@ -28,31 +28,31 @@ const VerificationScreen = ({navigation, route}: any) => {
   const ref3 = useRef<any>();
   const ref4 = useRef<any>();
 
-  // useEffect(() => {
-  //   ref1.current.focus();
-  // }, []);
+  useEffect(() => {
+    ref1.current.focus();
+  }, []);
 
-  // useEffect(() => {
-  //   if (limit > 0) {
-  //     const interval = setInterval(() => {
-  //       setLimit(limit => limit - 1);
-  //     }, 1000);
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [limit]);
+  useEffect(() => {
+    if (limit > 0) {
+      const interval = setInterval(() => {
+        setLimit(limit => limit - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [limit]);
 
-  // useEffect(() => {
-  //   let item = ``;
+  useEffect(() => {
+    let item = ``;
 
-  //   codeValues.forEach(val => (item += val));
+    codeValues.forEach(val => (item += val));
 
-  //   setNewCode(item);
-  // }, [codeValues]);
+    setNewCode(item);
+  }, [codeValues]);
 
   const handleChangeCode = (val: string, index: number) => {
-    // const data = [...codeValues];
-    // data[index] = val;
-    // setCodeValues(data);
+    const data = [...codeValues];
+    data[index] = val;
+    setCodeValues(data);
   };
 
   const handleResendVerification = async () => {};
@@ -60,7 +60,7 @@ const VerificationScreen = ({navigation, route}: any) => {
   const handleVerification = async () => {};
 
   return (
-    <ContainerComponent back isImageBackground isScroll>
+    <ContainerComponent back isImageBackground>
       <SpaceComponent height={23} />
 
       <SectionComponent styles={{alignItems: 'center'}}>
@@ -73,75 +73,77 @@ const VerificationScreen = ({navigation, route}: any) => {
 
       <SectionComponent styles={{flex: 1, backgroundColor: 'white', borderTopLeftRadius: 20, borderTopRightRadius: 20, width: '100%'}}>
         <SpaceComponent height={50} />
-
-        <RowComponent justify="space-around">
-          <TextInput
-            keyboardType="number-pad"
-            // ref={ref1}
-            value={codeValues[0]}
-            style={[styles.input]}
-            maxLength={1}
-            onChangeText={val => {
-              val.length > 0 && ref2.current.focus();
-              handleChangeCode(val, 0);
-            }}
-            // onChange={() => }
-            placeholder="-"
-          />
-          <TextInput
-            ref={ref2}
-            value={codeValues[1]}
-            keyboardType="number-pad"
-            onChangeText={val => {
-              handleChangeCode(val, 1);
-              val.length > 0 && ref3.current.focus();
-            }}
-            style={[styles.input]}
-            maxLength={1}
-            placeholder="-"
-          />
-          <TextInput
-            keyboardType="number-pad"
-            value={codeValues[2]}
-            ref={ref3}
-            onChangeText={val => {
-              handleChangeCode(val, 2);
-              val.length > 0 && ref4.current.focus();
-            }}
-            style={[styles.input]}
-            maxLength={1}
-            placeholder="-"
-          />
-          <TextInput
-            keyboardType="number-pad"
-            ref={ref4}
-            value={codeValues[3]}
-            onChangeText={val => {
-              handleChangeCode(val, 3);
-            }}
-            style={[styles.input]}
-            maxLength={1}
-            placeholder="-"
-          />
-        </RowComponent>
-
-        {errorMessage && (
-          <SectionComponent>
-            <TextComponent styles={{textAlign: 'center'}} text={errorMessage} color={appColors.danger} />
-          </SectionComponent>
-        )}
-        <SectionComponent>
-          {limit > 0 ? (
-            <RowComponent justify="center">
-              <TextComponent text="Re-send code in  " flex={0} />
-              <TextComponent text={`${(limit - (limit % 60)) / 60}:${limit - (limit - (limit % 60))}`} flex={0} color={appColors.link} />
-            </RowComponent>
-          ) : (
-            <RowComponent>
-              <ButtonComponent type="link" text="Resend email verification" onPress={handleResendVerification} />
-            </RowComponent>
+        <ScrollView>
+          <RowComponent justify="space-around">
+            <TextInput
+              keyboardType="number-pad"
+              ref={ref1}
+              value={codeValues[0]}
+              style={[styles.input]}
+              maxLength={1}
+              onChangeText={val => {
+                val.length > 0 && ref2.current.focus();
+                handleChangeCode(val, 0);
+              }}
+              onChange={() => {}}
+              placeholder="-"
+            />
+            <TextInput
+              ref={ref2}
+              value={codeValues[1]}
+              keyboardType="number-pad"
+              onChangeText={val => {
+                handleChangeCode(val, 1);
+                val.length > 0 && ref3.current.focus();
+              }}
+              style={[styles.input]}
+              maxLength={1}
+              placeholder="-"
+            />
+            <TextInput
+              keyboardType="number-pad"
+              value={codeValues[2]}
+              ref={ref3}
+              onChangeText={val => {
+                handleChangeCode(val, 2);
+                val.length > 0 && ref4.current.focus();
+              }}
+              style={[styles.input]}
+              maxLength={1}
+              placeholder="-"
+            />
+            <TextInput
+              keyboardType="number-pad"
+              ref={ref4}
+              value={codeValues[3]}
+              onChangeText={val => {
+                handleChangeCode(val, 3);
+              }}
+              style={[styles.input]}
+              maxLength={1}
+              placeholder="-"
+            />
+          </RowComponent>
+          {errorMessage && (
+            <SectionComponent>
+              <TextComponent styles={{textAlign: 'center'}} text={errorMessage} color={appColors.danger} />
+            </SectionComponent>
           )}
-        </SectionComponent>
+
+          <SpaceComponent height={30} />
+          <View>
+            {limit > 0 ? (
+              <RowComponent justify="center">
+                <TextComponent text="Re-send code in  " flex={0} />
+                <TextComponent text={`${(limit - (limit % 60)) / 60}:${limit - (limit - (limit % 60))}`} flex={0} color={appColors.primary} />
+              </RowComponent>
+            ) : (
+              <View>
+                <ButtonComponent type="primary" text="Resend email verification" onPress={handleResendVerification} />
+              </View>
+            )}
+          </View>
+        </ScrollView>
       </SectionComponent>
       <LoadingModal visible={isLoading} />
     </ContainerComponent>

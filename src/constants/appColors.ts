@@ -11,4 +11,9 @@ export const appColors = {
     link: '#5669FF',
     danger: '#e74c3c',
     placeholderColor: '#A0A5BA',
+    background1: '#F6F8FA',
+    input: '#F0F5FA',
+
+
+
 };

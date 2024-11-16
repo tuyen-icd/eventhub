@@ -5,3 +5,4 @@ export const SCHEMA_LOGIN = Yup.object().shape({
   password: Yup.string().required('Password is required'),
   isRemember: Yup.boolean(),
 });
+

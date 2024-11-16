@@ -1,11 +1,19 @@
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {ICBackBlack, ICBackGray, ICBackWhite, ICCart, ICClose, ICFilter, ICMore, ICSave, ICSearch} from '../../assets/svgs';
 import {scale} from '../../utils/scaleDimentions';
 import {appColors} from '../../constants';
 
-const BackHeader = ({containerStyle = {}, title = '', children = undefined, goBackHandle = () => {}}) => {
+interface Props {
+  containerStyle?: StyleProp<TextStyle>;
+  title?: string;
+  children?: React.ReactNode;
+  btn?: string;
+  goBackHandle?: () => void;
+}
+const BackHeader = (props: Props) => {
+  const {containerStyle, title, children, btn, goBackHandle} = props;
   const navigation: any = useNavigation();
   return (
     <View style={styles.flexRow}>
@@ -25,7 +33,7 @@ const BackHeader = ({containerStyle = {}, title = '', children = undefined, goBa
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <ICBackWhite />
+          {btn === 'white' ? <ICBackWhite /> : btn === 'gray' ? <ICBackGray /> : btn === 'black' ? <ICBackBlack /> : <ICBackBlack />}
         </View>
       </TouchableOpacity>
       <Text style={styles.txtTileHeader}>{title}</Text>

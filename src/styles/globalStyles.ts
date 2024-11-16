@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
-import {appColors} from '../constants/appColors';
-import {fontFamilies} from '../constants/appFont';
+import { StyleSheet } from 'react-native';
+import { appColors } from '../constants/appColors';
+import { fontFamilies } from '../constants/appFont';
 
 export const globalStyles = StyleSheet.create({
   container: {
@@ -36,7 +36,7 @@ export const globalStyles = StyleSheet.create({
   },
 
   section: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 24,
     paddingBottom: 20,
   },
   row: {

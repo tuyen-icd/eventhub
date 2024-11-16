@@ -17,7 +17,7 @@ const RowComponent = (props: Props) => {
       {children}
     </TouchableOpacity>
   ) : (
-    <View style={localStyles}>{children}</View>
+    <View style={[localStyles]}>{children}</View>
   );
 };
 

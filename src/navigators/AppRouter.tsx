@@ -6,6 +6,7 @@ import {useAsyncStorage} from '@react-native-async-storage/async-storage';
 import {SplashScreen} from '../screens';
 import {useStore} from 'zustand';
 import {useAuthStore} from '../stores/auth.store';
+import {IAuth} from '../types/auth.type';
 
 function AppRouter() {
   const [isShowSplash, setIsShowSplash] = useState(true);
@@ -13,7 +14,7 @@ function AppRouter() {
 
   const auth = useAuthStore(state => state.auth);
 
-  console.log('auth :>> ', auth);
+  // console.log('auth :>> ', auth);
   useEffect(() => {
     checkToken();
     const timeOut = setTimeout(() => {
@@ -23,9 +24,15 @@ function AppRouter() {
   }, []);
 
   const checkToken = async () => {
-    const token: any = await getItem();
-    console.log('checkToken :>> ', token);
-    token && auth(JSON.parse(token));
+    // const token: any = await getItem();
+    // // console.log('checkToken :>> ', token);
+    // token && auth(JSON.parse(token));
+
+    const token: string | null = await getItem();
+    if (token) {
+      const parsedToken: IAuth = JSON.parse(token);
+      useAuthStore.setState({auth: parsedToken});
+    }
   };
 
   if (isShowSplash) {

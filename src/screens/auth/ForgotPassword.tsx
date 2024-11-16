@@ -24,6 +24,7 @@ const ForgotPassword = () => {
           <SpaceComponent height={24} />
           <TextComponent font="regular" text="EMAIL" styles={{paddingBottom: 8}} />
           <InputComponent placeholder="example@gmail.com" value={email} onChange={setEmail} affix={<Sms size={22} color={appColors.gray} />} />
+          <SpaceComponent height={30} />
           <View>
             <ButtonComponent text="SEND CODE" type="primary" icon={<ArrowCircleRight2 size={26} color={appColors.white} />} iconFlex="right" />
           </View>

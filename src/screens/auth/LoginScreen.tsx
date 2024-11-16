@@ -1,17 +1,16 @@
+import {yupResolver} from '@hookform/resolvers/yup';
 import {Lock, Sms} from 'iconsax-react-native';
 import React, {useState} from 'react';
-import {Image, ImageBackground} from 'react-native';
+import {FormProvider, SubmitHandler, useForm} from 'react-hook-form';
+import {ScrollView, View} from 'react-native';
 import {ButtonComponent, RowComponent, SectionComponent, SpaceComponent, TextComponent} from '../../components';
 import ContainerComponent from '../../components/ContainerComponent';
-import {appColors} from '../../constants';
-import {FormProvider, SubmitHandler, useForm} from 'react-hook-form';
 import InputRHF from '../../components/hook-form/InputRHF';
 import SwitchRHF from '../../components/hook-form/SwitchRHF';
-import {yupResolver} from '@hookform/resolvers/yup';
+import {appColors} from '../../constants';
 import {SCHEMA_LOGIN} from '../../constants/schema';
 import {useAuthStore} from '../../stores/auth.store';
 import SocialLogin from './components/SocialLogin';
-import {backgroundLogin} from '../../assets/svgs';
 
 const LoginScreen = ({navigation}: any) => {
   const login = useAuthStore(state => state.login);
@@ -34,89 +33,76 @@ const LoginScreen = ({navigation}: any) => {
     login({...values, navigation}, isLoading => setIsLoading(isLoading));
   };
   return (
-    <ImageBackground
-      source={backgroundLogin}
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-      resizeMode="cover"
-      imageStyle={{flex: 1, width: '100%', height: '100%'}}>
-      <ContainerComponent isImageBackground isScroll>
-        <FormProvider {...form}>
-          <SectionComponent
-            styles={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 75,
-            }}>
-            <Image
-              source={require('../../assets/images/text-logo.png')}
-              style={{
-                width: 162,
-                height: 114,
-                marginBottom: 30,
-              }}
-            />
-          </SectionComponent>
-          <SectionComponent>
-            <TextComponent size={24} title text="Sign in" />
-            <SpaceComponent height={21} />
+    <ContainerComponent isImageBackground>
+      <SpaceComponent height={70} />
+      <SectionComponent styles={{alignItems: 'center'}}>
+        <TextComponent size={30} title text="LOG IN" color={appColors.white} />
+        <SpaceComponent height={12} />
+        <TextComponent styles={{letterSpacing: 1}} size={16} text="Please sign in to your existing account" color={appColors.white} />
+      </SectionComponent>
+      <SpaceComponent height={50} />
+      <SectionComponent styles={{flex: 1, backgroundColor: 'white', borderTopLeftRadius: 20, borderTopRightRadius: 20, width: '100%'}}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <SpaceComponent height={24} />
+          <FormProvider {...form}>
+            <View>
+              {/* <TextComponent color={appColors.text} font={fontFamilies.regular} size={13} text="Email" styles={{paddingBottom: 8}} /> */}
+              <InputRHF.Text
+                name="email"
+                {...form}
+                inputProps={{
+                  placeholder: 'Email',
+                  affix: <Sms size={22} color={appColors.gray} />,
+                }}
+              />
+              <SpaceComponent height={16} />
+              {/* <TextComponent color={appColors.text} font={fontFamilies.regular} size={13} text="Password" styles={{paddingBottom: 8}} /> */}
+              <InputRHF.Text
+                name="password"
+                {...form}
+                inputProps={{
+                  placeholder: 'Password',
+                  isPassword: true,
+                  allowClear: true,
+                  affix: <Lock size={22} color={appColors.gray} />,
+                }}
+              />
+              <SpaceComponent height={24} />
 
-            <InputRHF.Text
-              name="email"
-              {...form}
-              inputProps={{
-                placeholder: 'Email',
-                affix: <Sms size={22} color={appColors.gray} />,
-              }}
-            />
-
-            <SpaceComponent height={10} />
-            <InputRHF.Text
-              name="password"
-              {...form}
-              inputProps={{
-                placeholder: 'Password',
-                isPassword: true,
-                allowClear: true,
-                affix: <Lock size={22} color={appColors.gray} />,
-              }}
-            />
-            <SpaceComponent height={10} />
-
-            <RowComponent justify="space-between">
-              <RowComponent>
-                <SwitchRHF
-                  name="isRemember"
-                  fieldProps={{
-                    trackColor: {
-                      true: appColors.primary,
-                    },
-                    thumbColor: appColors.white,
-                  }}
-                />
-                <SpaceComponent width={4} />
-                <TextComponent text="Remember me" />
+              <RowComponent justify="space-between">
+                <RowComponent>
+                  <SwitchRHF
+                    name="isRemember"
+                    fieldProps={{
+                      trackColor: {
+                        true: appColors.primary,
+                      },
+                      thumbColor: appColors.white,
+                    }}
+                  />
+                  <SpaceComponent width={4} />
+                  <TextComponent text="Remember me" />
+                </RowComponent>
+                <ButtonComponent type="link" text="Forgot Password?" onPress={() => navigation.navigate('ForgotPassword')} />
               </RowComponent>
-              <ButtonComponent text="Forgot Password?" onPress={() => navigation.navigate('ForgotPassword')} type="text" />
-            </RowComponent>
-          </SectionComponent>
-          <SpaceComponent height={16} />
-          <SectionComponent>
-            <ButtonComponent onPress={form.handleSubmit(handleLogin)} type="primary" text="SIGN IN" isLoading={isLoading} />
-          </SectionComponent>
-          <SocialLogin />
-          <SectionComponent>
-            <RowComponent justify="center">
-              <TextComponent text="Don’t have an account? " />
-              <ButtonComponent type="link" text="Sign up" onPress={() => navigation.navigate('SignUpScreen')} />
-            </RowComponent>
-          </SectionComponent>
-        </FormProvider>
-      </ContainerComponent>
-    </ImageBackground>
+            </View>
+            <SpaceComponent height={37} />
+            <View>
+              <ButtonComponent onPress={form.handleSubmit(handleLogin)} type="primary" text="SIGN IN" isLoading={isLoading} />
+            </View>
+            <SpaceComponent height={20} />
+            <View>
+              <RowComponent justify="center">
+                <TextComponent text="Don’t have an account? " />
+                <ButtonComponent type="link" text="Sign up" onPress={() => navigation.navigate('SignUpScreen')} />
+              </RowComponent>
+            </View>
+            <SpaceComponent height={27} />
+            <SocialLogin />
+          </FormProvider>
+        </ScrollView>
+      </SectionComponent>
+    </ContainerComponent>
   );
 };
 

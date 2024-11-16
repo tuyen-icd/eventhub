@@ -27,5 +27,19 @@ export const ICSearch = require('./Search.svg').default;
 export const ICGoogle = require('./google-svgrepo.svg').default;
 export const ICFacebook = require('./IcFacebook.svg').default;
 
+export const ICAddress = require('./Address.svg').default;
+export const ICCartProfile = require('./Cart-Profile.svg').default;
+export const ICFAQs = require('./FAQS.svg').default;
+export const ICFavouriteProfile = require('./Favourite-Profile.svg').default;
+export const ICLogOut = require('./Logout.svg').default;
+export const ICNotificationProfile = require('./Notifications-Profile.svg').default;
+export const ICPersonalInfo = require('./Personal-info.svg').default;
+export const ICSettings = require('./Settings.svg').default;
+export const ICChevronRight = require('./chevron-right.svg').default;
+export const ICEmailProfile = require('./Email-profile.svg').default;
+export const ICEdit = require('./Edit.svg').default;
+
+
+
 
 
