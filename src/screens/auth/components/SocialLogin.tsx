@@ -1,13 +1,9 @@
 import React, {useState} from 'react';
-import {Facebook, Google} from '../../../assets/svgs';
-import {
-  ButtonComponent,
-  SectionComponent,
-  SpaceComponent,
-  TextComponent,
-} from '../../../components';
+import {Facebook, Google, ICFacebook, ICGoogle} from '../../../assets/svgs';
+import {ButtonComponent, SectionComponent, SpaceComponent, TextComponent} from '../../../components';
 import {appColors, fontFamilies} from '../../../constants';
 import LoadingModal from '../../../modal/LoadingModal';
+import {scale} from '../../../utils/scaleDimentions';
 
 const SocialLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,16 +15,10 @@ const SocialLogin = () => {
   };
   return (
     <SectionComponent>
-      <TextComponent
-        styles={{textAlign: 'center'}}
-        text="OR"
-        color={appColors.gray4}
-        size={16}
-        font={fontFamilies.medium}
-      />
+      <TextComponent styles={{textAlign: 'center'}} text="OR" color={appColors.gray4} size={16} font={fontFamilies.medium} />
       <SpaceComponent height={16} />
 
-      <ButtonComponent
+      {/* <ButtonComponent
         type="primary"
         onPress={handleLoginWithGoogle}
         color={appColors.white}
@@ -48,7 +38,13 @@ const SocialLogin = () => {
         onPress={handleLoginWithFacebook}
         iconFlex="left"
         icon={<Facebook />}
-      />
+      /> */}
+
+      <SectionComponent styles={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: scale(30)}}>
+        <ICFacebook />
+        <ICGoogle />
+      </SectionComponent>
+
       <LoadingModal visible={isLoading} />
     </SectionComponent>
   );

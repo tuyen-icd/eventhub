@@ -1,66 +1,43 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Swiper from 'react-native-swiper';
-import {TextComponent} from '../../components';
-import {appInfo, fontFamilies, appColors} from '../../constants';
+import {onboard_1, onboard_2, onboard_3} from '../../assets/svgs';
+import {ButtonComponent, SectionComponent} from '../../components';
+import {appColors} from '../../constants';
 import {globalStyles} from '../../styles/globalStyles';
+import OnBoard from './components/OnBoard';
 
 const OnbroadingScreen = ({navigation}: any) => {
   const [index, setIndex] = useState(0);
 
   return (
-    <View style={[globalStyles.container]}>
-      <Swiper style={{}} loop={false} onIndexChanged={num => setIndex(num)} index={index} activeDotColor={appColors.white}>
-        <Image
-          source={require('../../assets/images/onboarding-1.png')}
-          style={{
-            flex: 1,
-            width: appInfo.sizes.WIDTH,
-            height: appInfo.sizes.HEIGHT,
-            resizeMode: 'cover',
-          }}
+    <SectionComponent styles={[globalStyles.container]}>
+      <Swiper loop={false} onIndexChanged={num => setIndex(num)} index={index} activeDotColor={appColors.primary}>
+        <OnBoard
+          img={onboard_1}
+          title="All your favorites"
+          desc="Get all your loved foods in one once place,
+you just place the orer we do the rest"
         />
-        <Image
-          source={require('../../assets/images/onboarding-2.png')}
-          style={{
-            flex: 1,
-            width: appInfo.sizes.WIDTH,
-            height: appInfo.sizes.HEIGHT,
-            resizeMode: 'cover',
-          }}
+        <OnBoard
+          img={onboard_2}
+          title="Order from choosen chef"
+          desc="Get all your loved foods in one once place,
+you just place the orer we do the rest"
         />
-        <Image
-          source={require('../../assets/images/onboarding-2.png')}
-          style={{
-            flex: 1,
-            width: appInfo.sizes.WIDTH,
-            height: appInfo.sizes.HEIGHT,
-            resizeMode: 'cover',
-          }}
+        <OnBoard
+          img={onboard_3}
+          title="Free delivery offers"
+          desc="Get all your loved foods in one once place,
+you just place the orer we do the rest"
         />
       </Swiper>
-      <View
-        style={[
-          {
-            paddingHorizontal: 16,
-            paddingVertical: 20,
-            position: 'absolute',
-            bottom: 20,
-            right: 20,
-            left: 20,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          },
-        ]}>
-        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-          <TextComponent text="Skip" color={appColors.gray2} font={fontFamilies.medium} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => (index < 2 ? setIndex(index + 1) : navigation.navigate('LoginScreen'))}>
-          <TextComponent text="Next" color={appColors.white} font={fontFamilies.medium} />
-        </TouchableOpacity>
-      </View>
-    </View>
+
+      <SectionComponent>
+        <ButtonComponent onPress={() => (index < 2 ? setIndex(index + 1) : navigation.navigate('LoginScreen'))} type="primary" text="NEXT" />
+        <ButtonComponent onPress={() => navigation.navigate('LoginScreen')} type="primary" text="SKIP" />
+      </SectionComponent>
+    </SectionComponent>
   );
 };
 
