@@ -4,8 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {globalStyles} from '../styles/globalStyles';
 import {useNavigation} from '@react-navigation/native';
 import RowComponent from './RowComponent';
-import {ArrowLeft} from 'iconsax-react-native';
-import {appColors, fontFamilies} from '../constants';
+import {fontFamilies} from '../constants';
 import TextComponent from './TextComponent';
 import {ICBackWhite} from '../assets/svgs';
 
