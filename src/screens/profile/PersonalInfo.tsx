@@ -8,7 +8,7 @@ import {useAuthStore} from '../../stores/auth.store';
 
 const PersonalInfo = ({navigation}: any) => {
   const auth = useAuthStore(state => state.auth);
-  //   console.log(auth);
+  console.log(auth);
   return (
     <SectionComponent styles={{flex: 1, backgroundColor: 'white'}}>
       <SpaceComponent height={70} />
