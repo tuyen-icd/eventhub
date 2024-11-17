@@ -1,12 +1,11 @@
 import {ArrowCircleRight2, Lock, Sms, User} from 'iconsax-react-native';
 import React, {useEffect, useState} from 'react';
+import {ScrollView} from 'react-native';
+import authenticationAPI from '../../apis/authAPI';
 import {ButtonComponent, ContainerComponent, InputComponent, RowComponent, SectionComponent, SpaceComponent, TextComponent} from '../../components';
-import {appColors, fontFamilies} from '../../constants';
+import {appColors} from '../../constants';
 import {LoadingModal} from '../../modal';
 import {Validate} from '../../utils/validate';
-import SocialLogin from './components/SocialLogin';
-import authenticationAPI from '../../apis/authAPI';
-import {ScrollView} from 'react-native';
 
 const initValue = {
   userName: '',

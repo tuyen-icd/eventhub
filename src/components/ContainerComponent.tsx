@@ -52,7 +52,7 @@ const ContainerComponent = (props: Props) => {
   );
   return isImageBackground ? (
     <ImageBackground source={require('../assets/images/LogIn_Empty.png')} style={{flex: 1}} imageStyle={{flex: 1}}>
-      <SafeAreaView style={{flex: 1}}>{headerComponent()}</SafeAreaView>
+      {headerComponent()}
     </ImageBackground>
   ) : (
     <SafeAreaView style={[globalStyles.container]}>

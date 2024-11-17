@@ -1,7 +1,7 @@
-import {View, Text, Image} from 'react-native';
+import {Image} from 'react-native';
 import React from 'react';
 import {SectionComponent, SpaceComponent, TextComponent} from '../../../components';
-import {appColors, appInfo} from '../../../constants';
+import {appColors} from '../../../constants';
 
 interface Props {
   img?: any;
