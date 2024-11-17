@@ -1,210 +1,207 @@
+import {yupResolver} from '@hookform/resolvers/yup';
 import {ArrowCircleRight2, Lock, Sms, User} from 'iconsax-react-native';
-import React, {useEffect, useState} from 'react';
-import {ButtonComponent, ContainerComponent, InputComponent, RowComponent, SectionComponent, SpaceComponent, TextComponent} from '../../components';
+import React, {useState} from 'react';
+import {FormProvider, SubmitHandler, useForm} from 'react-hook-form';
+import {Alert, ScrollView, View} from 'react-native';
+import {
+    ButtonComponent,
+    ContainerComponent,
+    RowComponent,
+    SectionComponent,
+    SpaceComponent,
+    TextComponent,
+} from '../../components';
+import InputRHF from '../../components/hook-form/InputRHF';
 import {appColors, fontFamilies} from '../../constants';
+import {SCHEMA_SIGNUP} from '../../constants/schema';
 import {LoadingModal} from '../../modal';
-import {Validate} from '../../utils/validate';
-import SocialLogin from './components/SocialLogin';
+import {URL_API} from '../../constants/endpoints';
 import authenticationAPI from '../../apis/authAPI';
-import {ScrollView} from 'react-native';
-
-const initValue = {
-  userName: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-};
 
 const SignUpScreen = ({navigation}: any) => {
-  const [values, setValues] = useState(initValue);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<any>();
-  const [isDisable, setIsDisable] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (
-      !errorMessage ||
-      (errorMessage && (errorMessage.email || errorMessage.password || errorMessage.confirmPassword)) ||
-      !values.email ||
-      !values.password ||
-      !values.confirmPassword
-    ) {
-      setIsDisable(true);
-    } else {
-      setIsDisable(false);
-    }
-  }, [errorMessage, values]);
+    const form = useForm({
+        defaultValues: {
+            userName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+        },
+        resolver: yupResolver(SCHEMA_SIGNUP),
+    });
 
-  const handleChangeValue = (key: string, value: string) => {
-    const data: any = {...values};
-    data[`${key}`] = value;
-    setValues(data);
-  };
-
-  const formValidator = (key: string) => {
-    const data = {...errorMessage};
-    let message = ``;
-
-    switch (key) {
-      case 'email':
-        if (!values.email) {
-          message = `Email is required!!!`;
-        } else if (!Validate.email(values.email)) {
-          message = 'Email is not invalid!!';
-        } else {
-          message = '';
-        }
-
-        break;
-
-      case 'password':
-        message = !values.password ? `Password is required!!!` : '';
-        break;
-
-      case 'confirmPassword':
-        if (!values.confirmPassword) {
-          message = `Please type confirm password!!`;
-        } else if (values.confirmPassword !== values.password) {
-          message = 'Password is not match!!!';
-        } else {
-          message = '';
-        }
-
-        break;
-    }
-
-    data[`${key}`] = message;
-
-    setErrorMessage(data);
-  };
-
-  const handleRegister = async () => {
-    const {email, password, confirmPassword} = values;
-
-    const emailValidator = Validate.email(email);
-    const passwordValidator = Validate.Password(password);
-
-    if (email && password && confirmPassword) {
-      if (emailValidator && values.password === values.confirmPassword) {
-        setErrorMessage('');
+    const handleRegister: SubmitHandler<{
+        userName: string;
+        email: string;
+        password: string;
+        confirmPassword: string;
+    }> = async values => {
         setIsLoading(true);
+
         try {
-          const res = await authenticationAPI.HandleAuthentication('/register', values, 'post');
-          setIsLoading(false);
-          if (res.data?.accesstoken) {
-            navigation.navigate('VerifyScreen');
-          }
+            const res = await authenticationAPI.HandleAuthentication(
+                URL_API.VERIFICATION,
+                {email: values.email},
+                'post',
+            );
+            setIsLoading(false);
+            navigation.navigate('Verification', {
+                // code: res.data.code,
+                code: 1234,
+                ...values,
+            });
         } catch (error) {
-          console.log('error', error);
-          setIsLoading(false);
+            console.error('Error during API call:', error);
+            // Alert.alert(error.response?.data?.message || 'Đã xảy ra lỗi');
+            setIsLoading(false);
         }
-      } else if (values.password !== values.confirmPassword) {
-        setErrorMessage({
-          confirmPassword: 'Mật khẩu và xác nhận mật khẩu không khớp!',
-        });
-      } else {
-        setErrorMessage({general: 'Email not correct!'});
-      }
-    } else {
-      setErrorMessage({general: 'Vui long nhap day du thong tin'});
-    }
-  };
+    };
+    return (
+        <>
+            <ContainerComponent isImageBackground back>
+                <SectionComponent styles={{alignItems: 'center'}}>
+                    <TextComponent size={30} title text="Sign Up" color={appColors.white} />
+                    <SpaceComponent height={12} />
+                    <TextComponent
+                        styles={{letterSpacing: 1}}
+                        size={16}
+                        text="Please sign up to get started"
+                        color={appColors.white}
+                    />
+                </SectionComponent>
+                <SpaceComponent height={50} />
 
-  return (
-    <>
-      <ContainerComponent isImageBackground back>
-        <SectionComponent styles={{alignItems: 'center'}}>
-          <TextComponent size={30} title text="Sign Up" color={appColors.white} />
-          <SpaceComponent height={12} />
-          <TextComponent styles={{letterSpacing: 1}} size={16} text="Please sign up to get started" color={appColors.white} />
-        </SectionComponent>
-        <SpaceComponent height={50} />
+                <SectionComponent
+                    styles={{
+                        flex: 1,
+                        backgroundColor: 'white',
+                        borderTopLeftRadius: 20,
+                        borderTopRightRadius: 20,
+                        width: '100%',
+                    }}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        <FormProvider {...form}>
+                            <View>
+                                <SpaceComponent height={24} />
+                                <TextComponent
+                                    color={appColors.text}
+                                    font={fontFamilies.regular}
+                                    size={14}
+                                    text="Tên người dùng"
+                                    styles={{
+                                        paddingBottom: 8,
+                                        lineHeight: 16.84,
+                                        letterSpacing: 0.5,
+                                    }}
+                                />
+                                <InputRHF.Text
+                                    name="userName"
+                                    {...form}
+                                    inputProps={{
+                                        placeholder: 'UserName',
+                                        affix: <User size={22} color={appColors.gray} />,
+                                    }}
+                                />
 
-        <SectionComponent styles={{flex: 1, backgroundColor: 'white', borderTopLeftRadius: 20, borderTopRightRadius: 20, width: '100%'}}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <SpaceComponent height={24} />
-            {/* <TextComponent color={appColors.text} font={fontFamilies.regular} size={13} text="USER NAME" styles={{paddingBottom: 8}} /> */}
-
-            <InputComponent
-              value={values.userName}
-              placeholder="User name"
-              onChange={val => handleChangeValue('userName', val)}
-              allowClear
-              affix={<User size={22} color={appColors.gray} />}
-            />
-            {/* <TextComponent color={appColors.text} font={fontFamilies.regular} size={13} text="EMAIL" styles={{paddingBottom: 8}} /> */}
-            <InputComponent
-              value={values.email}
-              placeholder="Email"
-              onChange={val => handleChangeValue('email', val)}
-              allowClear
-              affix={<Sms size={22} color={appColors.gray} />}
-              onEnd={() => formValidator('email')}
-            />
-            {/* <TextComponent color={appColors.text} font={fontFamilies.regular} size={13} text="PASSWORD" styles={{paddingBottom: 8}} /> */}
-
-            <InputComponent
-              value={values.password}
-              placeholder="Password"
-              onChange={val => handleChangeValue('password', val)}
-              allowClear
-              affix={<Lock size={22} color={appColors.gray} />}
-              isPassword
-              onEnd={() => formValidator('password')}
-            />
-            {/* <TextComponent color={appColors.text} font={fontFamilies.regular} size={13} text="CONFIRM PASSWORD" styles={{paddingBottom: 8}} /> */}
-
-            <InputComponent
-              value={values.confirmPassword}
-              placeholder="Confirm password"
-              onChange={val => handleChangeValue('confirmPassword', val)}
-              isPassword
-              allowClear
-              affix={<Lock size={22} color={appColors.gray} />}
-              onEnd={() => formValidator('confirmPassword')}
-            />
-            {errorMessage && (
-              <SectionComponent>
-                {Object.keys(errorMessage).map(
-                  (error, index) => errorMessage[`${error}`] && <TextComponent text={errorMessage[`${error}`]} key={`error${index}`} color={appColors.danger} />,
-                )}
-              </SectionComponent>
-            )}
-            {errorMessage && (
-              <SectionComponent>
-                {errorMessage.general && <TextComponent text={errorMessage.general} color={appColors.danger} />}
-                {Object.keys(errorMessage).map(
-                  (error, index) =>
-                    error !== 'general' && errorMessage[`${error}`] && <TextComponent text={errorMessage[`${error}`]} key={`error${index}`} color={appColors.danger} />,
-                )}
-              </SectionComponent>
-            )}
-
-            <SpaceComponent height={47} />
-            <SectionComponent>
-              <ButtonComponent
-                // disable={isDisable}
-                onPress={handleRegister}
-                type="primary"
-                text="SIGN UP"
-                iconFlex="right"
-                icon={<ArrowCircleRight2 size="32" color="white" />}
-              />
-            </SectionComponent>
-            {/* <SpaceComponent height={16} /> */}
-            <SectionComponent>
-              <RowComponent justify="center">
-                <TextComponent text="Alredy have an account? " />
-                <ButtonComponent type="link" text="SignIn" onPress={() => navigation.navigate('LoginScreen')} />
-              </RowComponent>
-            </SectionComponent>
-            <ButtonComponent type="link" text="Verification" onPress={() => navigation.navigate('VerificationScreen')} />
-          </ScrollView>
-        </SectionComponent>
-      </ContainerComponent>
-      <LoadingModal visible={isLoading} />
-    </>
-  );
+                                <SpaceComponent height={16} />
+                                <TextComponent
+                                    color={appColors.text}
+                                    font={fontFamilies.regular}
+                                    size={14}
+                                    text="Địa chỉ Email"
+                                    styles={{
+                                        paddingBottom: 8,
+                                        lineHeight: 16.84,
+                                        letterSpacing: 0.5,
+                                    }}
+                                />
+                                <InputRHF.Text
+                                    name="email"
+                                    {...form}
+                                    inputProps={{
+                                        placeholder: 'Email',
+                                        affix: <Sms size={22} color={appColors.gray} />,
+                                    }}
+                                />
+                                <SpaceComponent height={16} />
+                                <TextComponent
+                                    color={appColors.text}
+                                    font={fontFamilies.regular}
+                                    size={14}
+                                    text="Mật khẩu"
+                                    styles={{
+                                        paddingBottom: 8,
+                                        lineHeight: 16.84,
+                                        letterSpacing: 0.5,
+                                    }}
+                                />
+                                <InputRHF.Text
+                                    name="password"
+                                    {...form}
+                                    inputProps={{
+                                        isPassword: true,
+                                        allowClear: true,
+                                        placeholder: 'Password',
+                                        affix: <Lock size={22} color={appColors.gray} />,
+                                    }}
+                                />
+                                <SpaceComponent height={16} />
+                                <TextComponent
+                                    color={appColors.text}
+                                    font={fontFamilies.regular}
+                                    size={14}
+                                    text="Xác nhận mật khẩu"
+                                    styles={{
+                                        paddingBottom: 8,
+                                        lineHeight: 16.84,
+                                        letterSpacing: 0.5,
+                                    }}
+                                />
+                                <InputRHF.Text
+                                    name="confirmPassword"
+                                    {...form}
+                                    inputProps={{
+                                        isPassword: true,
+                                        allowClear: true,
+                                        placeholder: 'Confirm password',
+                                        affix: <Lock size={22} color={appColors.gray} />,
+                                    }}
+                                />
+                                <SpaceComponent height={37} />
+                                <View>
+                                    <ButtonComponent
+                                        onPress={form.handleSubmit(handleRegister)}
+                                        type="primary"
+                                        text="ĐĂNG KÝ"
+                                        iconFlex="right"
+                                        icon={<ArrowCircleRight2 size="32" color="white" />}
+                                    />
+                                </View>
+                                <SpaceComponent height={16} />
+                                <SectionComponent>
+                                    <RowComponent justify="center">
+                                        <TextComponent text="Bạn đã có tài khoản? " />
+                                        <ButtonComponent
+                                            type="link"
+                                            text="Đăng nhập"
+                                            onPress={() => navigation.navigate('LoginScreen')}
+                                        />
+                                    </RowComponent>
+                                </SectionComponent>
+                                <ButtonComponent
+                                    type="link"
+                                    text="Verification"
+                                    onPress={() => navigation.navigate('VerificationScreen')}
+                                />
+                            </View>
+                        </FormProvider>
+                    </ScrollView>
+                </SectionComponent>
+            </ContainerComponent>
+            <LoadingModal visible={isLoading} />
+        </>
+    );
 };
 
 export default SignUpScreen;
