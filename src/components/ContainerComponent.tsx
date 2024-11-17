@@ -4,8 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {globalStyles} from '../styles/globalStyles';
 import {useNavigation} from '@react-navigation/native';
 import RowComponent from './RowComponent';
-import {ArrowLeft} from 'iconsax-react-native';
-import {appColors, fontFamilies} from '../constants';
+import {fontFamilies} from '../constants';
 import TextComponent from './TextComponent';
 import {ICBackWhite} from '../assets/svgs';
 import {HEIGHT_SCREEN, scale, scaleModerate, WIDTH_SCREEN} from '../utils/scaleDimentions';
@@ -67,9 +66,8 @@ const ContainerComponent = (props: Props) => {
         <ImageBackground
             source={require('../assets/images/LogIn_Empty.png')}
             style={{flex: 1}}
-            imageStyle={{flex: 1}}
-            resizeMode="cover">
-            <View style={{flex: 1}}>{headerComponent()}</View>
+            imageStyle={{flex: 1}}>
+            {headerComponent()}
         </ImageBackground>
     ) : (
         <SafeAreaView style={[globalStyles.container]}>
